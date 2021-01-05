@@ -18,9 +18,8 @@ int main (int argc, char *argv[]) {
         std::cerr << "Cannot connect to " << host << ":" << port << std::endl;
         return 1;
     }
-    char *byteAr = nullptr;
-    byteAr[0] = 0;
-    byteAr[1] = 0;
+    char *byteAr = new char[2];
+
     connectionHandler.shortToBytes(4, byteAr);
     connectionHandler.sendBytes(byteAr, 2);
 
