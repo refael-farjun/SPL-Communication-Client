@@ -21,7 +21,9 @@ public:
 
     short bytesToShort(char* bytesArr);
 
-    void
+    void processAckMsg();
+
+    void processErrMsg();
 
 
 
