@@ -11,11 +11,11 @@
 
 class Server2Client{
 private:
-    ConnectionHandler _handler;
+    ConnectionHandler &_handler;
     std::mutex & _mutex;
     int _id;
 public:
-    Server2Client(ConnectionHandler& handler, std::mutex& mutex);
+    Server2Client(int id, ConnectionHandler& handler, std::mutex& mutex);
 
     void run();
 

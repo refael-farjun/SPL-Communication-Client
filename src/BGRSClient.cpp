@@ -2,6 +2,7 @@
 // Created by spl211 on 06/01/2021.
 //
 #include "BGRSClient.h"
+#include "User2Client.h"
 
 int main (int argc, char *argv[]) {
     if (argc < 3) {
@@ -17,8 +18,14 @@ int main (int argc, char *argv[]) {
         return 1;
     }
 
+    std::thread t;
     std::mutex mutex;
-    Task task1(1, mutex);
-    Task task2(2, mutex);
+    User2client user2client(connectionHandler, mutex);
+    user2client.start();
+
+
+
+    std::cout << "here1" << std::endl;
+
 
 }

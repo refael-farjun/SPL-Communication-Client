@@ -6,11 +6,19 @@
 
 User2client::User2client(ConnectionHandler &handler, std::mutex &mutex) : _handler(handler), _mutex(mutex),
                         shouldTerminate(false) {
+}
 
+void shortToBytes(short num, char* bytesArr)
+{
+    bytesArr[0] = ((num >> 8) & 0xFF);
+    bytesArr[1] = (num & 0xFF);
 }
 
 void User2client::run() {
+    std::cout << "in run" << std::endl;
+
     while (!shouldTerminate) {
+
         const short bufsize = 1024;
         char buf[bufsize];
         std::cin.getline(buf, bufsize);
@@ -46,11 +54,34 @@ std::vector<std::string> User2client::split(std::string line, std::string delimi
 }
 
 void User2client::encode(std::vector<std::string> strVec) {
+
+    std::cout << strVec.size() << std::endl;
+    int bufferSize = 2;
+    for (size_t i = 1; i < strVec.size(); i++)
+    {
+        bufferSize += strVec[i].size();
+        std::cout << strVec[i] << std::endl;
+    }
+
     if (strVec[0] == "ADMINREG"){
         // encode by op
+
+
     }
     else if (strVec[0] == "STUDENTREG"){
         // encode by op
+        bufferSize += 2;
+        char *toSend = new char[bufferSize];
+        shortToBytes(3, toSend);
+
+        for (size_t i = 1; i < strVec.size(); i++)
+            strcpy(toSend + 1 + (i - 1) * strVec[i].size(), strVec[i].c_str());
+
+        std::cout << bufferSize<< std::endl;
+
+        _handler.sendBytes(toSend, bufferSize);
+
+        delete[] toSend;
     }
     else if (strVec[0] == "LOGIN"){
         // encode by op
@@ -78,8 +109,9 @@ void User2client::encode(std::vector<std::string> strVec) {
     }
     else if (strVec[0] == "MYCOURSES"){
         // encode by op
-    } else // wrong input
+    }
 
 
 }
+
 

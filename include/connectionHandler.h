@@ -48,7 +48,7 @@ public:
     // Close down the connection properly.
     void close();
 
-    void shortToBytes(short num, char* bytesArr);
+//    void shortToBytes(short num, char* bytesArr);
  
 }; //class ConnectionHandler
  

@@ -4,7 +4,7 @@
 
 #include "Server2Client.h"
 //ConnectionHandler handler = new ConnectionHandler("127.0.0.1", 7777);
-Server2Client::Server2Client(int id, ConnectionHandler &handler, std::mutex &mutex) : _id(id), _handler() _mutex(mutex) {
+Server2Client::Server2Client(int id, ConnectionHandler &handler, std::mutex &mutex) : _id(id), _handler(handler) ,_mutex(mutex) {
 //    this->_handler = handler;
 
 }

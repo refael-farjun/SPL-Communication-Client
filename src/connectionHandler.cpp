@@ -114,8 +114,3 @@ void ConnectionHandler::close() {
 //        return result;
 //    }
 
-void ConnectionHandler::shortToBytes(short num, char* bytesArr)
-{
-    bytesArr[0] = ((num >> 8) & 0xFF);
-    bytesArr[1] = (num & 0xFF);
-}
