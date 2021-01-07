@@ -59,6 +59,10 @@ std::vector<std::string> User2client::split(std::string line, std::string delimi
 //        std::cout << token << std::endl;
         line.erase(0, pos + delimiter.length());
     }
+    token = line.substr(0, pos);
+
+    strVec.push_back(token);
+
     return strVec;
 //    std::cout << line << std::endl;
 
@@ -66,12 +70,10 @@ std::vector<std::string> User2client::split(std::string line, std::string delimi
 
 void User2client::encode(std::vector<std::string> strVec) {
 
-    std::cout << strVec.size() << std::endl;
     int bufferSize = 2;
     for (size_t i = 1; i < strVec.size(); i++)
     {
         bufferSize += strVec[i].size();
-        std::cout << strVec[i] << std::endl;
     }
 
     if (strVec[0] == "ADMINREG"){
@@ -82,26 +84,23 @@ void User2client::encode(std::vector<std::string> strVec) {
     else if (strVec[0] == "STUDENTREG"){
         // encode by op
         bufferSize += 2;
-//        char *toSend = new char[bufferSize];
-        std::vector<char> toSend;
-        shortToBytes(3, toSend.data());
-//
-//        for (size_t i = 1; i < strVec.size(); i++)
-//            strcpy(toSend + 1 + (i - 1) * strVec[i].size(), strVec[i].c_str());
+        char *toSend = new char[bufferSize];
 
-        for (size_t i = 1; i < strVec.size(); i++){
-            if (i != 1)
-                toSend
-            for(int ch = 0 ; ch < strVec[i].size() ; ch++ ){
-
-            }
-        }
+        shortToBytes(2, toSend);
+        std::cout << toSend[0] << std::endl;
+        std::cout << toSend[1] << std::endl;
 
 
-        std::cout << bufferSize<< std::endl;
+
+
+        for (size_t i = 1; i < strVec.size(); i++)
+            strcpy(toSend + 1 + (i - 1) * strVec[i].size(), strVec[i].c_str());
+
+
+
+
 
         _handler.sendBytes(toSend, bufferSize);
-
 
         delete[] toSend;
     }
