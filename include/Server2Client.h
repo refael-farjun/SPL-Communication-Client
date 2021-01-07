@@ -23,6 +23,16 @@ public:
 
     short bytesToShort(char* bytesArr);
 
+    void optional(short messageOp);
+
+    void kdamCheck();
+
+    void courseStat();
+
+    void studentStat();
+
+    void myCourses();
+
     void processAckMsg();
 
     void processErrMsg();
