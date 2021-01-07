@@ -91,19 +91,9 @@ void User2client::encode(std::vector<std::string> strVec) {
         for (size_t i = 1; i < strVec.size(); i++){
             strcpy(toSend + counter   + (i - 1) * strVec[i].size(), strVec[i].c_str());
             counter++;
-//            strcpy(toSend + counter   + (i - 1) * strVec[i].size(), "\0");
-
-
-
-
+            strcpy(toSend + counter   + (i) * strVec[i].size(), "\0");
 
         }
-
-
-
-
-
-
 
         _handler.sendBytes(toSend, bufferSize);
 
