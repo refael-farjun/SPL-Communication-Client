@@ -5,7 +5,7 @@
 #include "Server2Client.h"
 //ConnectionHandler handler = new ConnectionHandler("127.0.0.1", 7777);
 Server2Client::Server2Client(ConnectionHandler &handler, std::mutex &mutex) : _handler(handler) ,
-                        _mutex(mutex), shouldTerminate(false) {
+                                                                              _mutex(mutex), shouldTerminate(false) {
 
 }
 
@@ -18,12 +18,8 @@ void Server2Client::stop() {
 
 
 void Server2Client::start(){
-    for (size_t i = 0; i < 20; i++)
-    {
-        std::cout << "server !!!"  << std::endl;
-    }
     myThread = new std::thread(&Server2Client::run, this);
-    myThread->join();
+//    myThread->join();
 }
 
 void Server2Client::kdamCheck() { //print the list of the KDAM courses
@@ -35,18 +31,40 @@ void Server2Client::kdamCheck() { //print the list of the KDAM courses
     std::cout << kdamCourses << std::endl;
 }
 
-void Server2Client::c() { //print the list of the KDAM courses
-    std::string kdamCourses;
-    if (!_handler.getLine(kdamCourses)){
+void Server2Client::courseStat() { //print the list of the KDAM courses
+    std::string course;
+    if (!_handler.getLine(course)){
         std::cout << "Disconnected. Exiting...\n" << std::endl;
         return;
     }
-    std::cout << kdamCourses << std::endl;
+    std::cout << course << std::endl; //Course: (<courseNum>) <courseName>
+    std::string seatAvailable;
+//    if() should implamnt if condition....................................................
+}
+
+void Server2Client::studentStat() { //print the list of the KDAM courses
+    std::string studentStat;
+    if (!_handler.getLine(studentStat)){
+        std::cout << "Disconnected. Exiting...\n" << std::endl;
+        return;
+    }
+    std::cout << studentStat << std::endl;
+}
+
+void Server2Client::myCourses() { //print the list of the KDAM courses
+    std::string myCourses;
+    if (!_handler.getLine(myCourses)){
+        std::cout << "Disconnected. Exiting...\n" << std::endl;
+        return;
+    }
+    std::cout << myCourses << std::endl;
 }
 
 void Server2Client::optional(short messageOp) {
     if(messageOp == 4){ // message opcode was - "LOGOUT"
         // SHOULD TERMINATE !!!!!!
+        this->shouldTerminate = true;
+        this->stop();
     }
     if(messageOp == 6){ // message opcode was - "KDAMCHECK"
         kdamCheck(); //print the KDAM courses
@@ -91,15 +109,15 @@ void Server2Client::processErrMsg() {
     }
     short messageOpcode = bytesToShort(msgOp);
     std::cout << "ERROR " << messageOpcode << std::endl;
-    }
+}
 
 
 void Server2Client::run() {
     while (!shouldTerminate){
         char byteOpcode[2];
         if (!_handler.getBytes(byteOpcode, sizeof(byteOpcode))) {
-        std::cout << "Disconnected. Exiting...\n" << std::endl;
-        break;
+            std::cout << "Disconnected. Exiting...\n" << std::endl;
+            break;
         }
         short opcode = bytesToShort(byteOpcode);
         std::cout << opcode << std::endl;
