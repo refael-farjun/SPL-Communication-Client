@@ -8,6 +8,19 @@ User2client::User2client(ConnectionHandler &handler, std::mutex &mutex) : _handl
                         shouldTerminate(false) {
 }
 
+void User2client::stop() {
+    shouldTerminate = true;
+    myThread->join();
+    delete myThread;
+    myThread = nullptr;
+}
+
+
+void User2client::start(){
+    myThread = new std::thread(&User2client::run, this);
+    myThread->join();
+}
+
 void shortToBytes(short num, char* bytesArr)
 {
     bytesArr[0] = ((num >> 8) & 0xFF);
@@ -15,8 +28,6 @@ void shortToBytes(short num, char* bytesArr)
 }
 
 void User2client::run() {
-    std::cout << "in run" << std::endl;
-
     while (!shouldTerminate) {
 
         const short bufsize = 1024;
@@ -71,15 +82,26 @@ void User2client::encode(std::vector<std::string> strVec) {
     else if (strVec[0] == "STUDENTREG"){
         // encode by op
         bufferSize += 2;
-        char *toSend = new char[bufferSize];
-        shortToBytes(3, toSend);
+//        char *toSend = new char[bufferSize];
+        std::vector<char> toSend;
+        shortToBytes(3, toSend.data());
+//
+//        for (size_t i = 1; i < strVec.size(); i++)
+//            strcpy(toSend + 1 + (i - 1) * strVec[i].size(), strVec[i].c_str());
 
-        for (size_t i = 1; i < strVec.size(); i++)
-            strcpy(toSend + 1 + (i - 1) * strVec[i].size(), strVec[i].c_str());
+        for (size_t i = 1; i < strVec.size(); i++){
+            if (i != 1)
+                toSend
+            for(int ch = 0 ; ch < strVec[i].size() ; ch++ ){
+
+            }
+        }
+
 
         std::cout << bufferSize<< std::endl;
 
         _handler.sendBytes(toSend, bufferSize);
+
 
         delete[] toSend;
     }
@@ -110,6 +132,8 @@ void User2client::encode(std::vector<std::string> strVec) {
     else if (strVec[0] == "MYCOURSES"){
         // encode by op
     }
+
+
 
 
 }

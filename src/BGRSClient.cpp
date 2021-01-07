@@ -26,6 +26,7 @@ int main (int argc, char *argv[]) {
 
 
     std::cout << "here1" << std::endl;
+    return 0;
 
 
 }

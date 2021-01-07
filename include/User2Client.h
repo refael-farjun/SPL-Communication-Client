@@ -26,18 +26,12 @@ public:
     void encode(std::vector<std::string>);
 
 
-    void start()
-    {
-        myThread = new std::thread(&User2client::run, this);
-    }
+    void start();
 
-    void stop()
-    {
-        shouldTerminate = true;
-        myThread->join();
-        delete myThread;
-        myThread = nullptr;
-    }
+
+
+    void stop();
+
 
 };
 #endif //BOOST_ECHO_CLIENT_USER2CLIENT_H
