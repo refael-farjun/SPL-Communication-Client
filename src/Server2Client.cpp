@@ -35,33 +35,42 @@ void Server2Client::kdamCheck() { //print the list of the KDAM courses
     std::cout << kdamCourses << std::endl;
 }
 
-//void Server2Client::optional(short messageOp) {
-//    if(messageOp == 4){ // message opcode was - "LOGOUT"
-//        // SHOULD TERMINATE !!!!!!
-//    }
-//    if(messageOp == 6){ // message opcode was - "KDAMCHECK"
-//        kdamCheck(); //print the KDAM courses
-//    }
-//    if(messageOp == 7){ // message opcode was - "COURSESTAT"
-//        courseStat(); // prints the state of the course
-//    }
-//    if(messageOp == 9){ // message opcode was - "STUDENTSTAT"
-//        studentStat(); // prints the state of the student
-//    }
-//    if(messageOp == 11){ // message opcode was - "MYCOURSES"
-//        myCourses(); // prints the list of the courses numbers that the student has registered to
-//    }
-//    else{ //messageOp that doesn't have 'optional'
-//        char emptyOptional[1];
-//        if (!_handler.getBytes(emptyOptional, sizeof(emptyOptional))){
-//            std::cout << "Disconnected. Exiting...\n" << std::endl;
-//            return;
-//        }
-//        return;
-//    }
-//
-//
-//}
+void Server2Client::c() { //print the list of the KDAM courses
+    std::string kdamCourses;
+    if (!_handler.getLine(kdamCourses)){
+        std::cout << "Disconnected. Exiting...\n" << std::endl;
+        return;
+    }
+    std::cout << kdamCourses << std::endl;
+}
+
+void Server2Client::optional(short messageOp) {
+    if(messageOp == 4){ // message opcode was - "LOGOUT"
+        // SHOULD TERMINATE !!!!!!
+    }
+    if(messageOp == 6){ // message opcode was - "KDAMCHECK"
+        kdamCheck(); //print the KDAM courses
+    }
+    if(messageOp == 7){ // message opcode was - "COURSESTAT"
+        courseStat(); // prints the state of the course
+    }
+    if(messageOp == 9){ // message opcode was - "STUDENTSTAT"
+        studentStat(); // prints the state of the student
+    }
+    if(messageOp == 11){ // message opcode was - "MYCOURSES"
+        myCourses(); // prints the list of the courses numbers that the student has registered to
+    }
+    else{ //messageOp that doesn't have 'optional'
+        char emptyOptional[1];
+        if (!_handler.getBytes(emptyOptional, sizeof(emptyOptional))){
+            std::cout << "Disconnected. Exiting...\n" << std::endl;
+            return;
+        }
+        return;
+    }
+
+
+}
 
 void Server2Client::processAckMsg() {
     char msgOp[2];
@@ -69,18 +78,20 @@ void Server2Client::processAckMsg() {
         std::cout << "Disconnected. Exiting..... \n" << std::endl;
         return;
     }
-    short messageOpcode = bytesToShort(msgOp); //opcode to know if its ack(12) ore error(13)
+    short messageOpcode = bytesToShort(msgOp); //opcode to know if its ack(12) or error(13)
     std::cout << "ACK " << messageOpcode << std::endl;
-//    optional(messageOpcode);
+    optional(messageOpcode);
 }
 
 void Server2Client::processErrMsg() {
     char msgOp[2];
-
-
-
-
-}
+    if (!_handler.getBytes(msgOp, sizeof(msgOp))) {
+        std::cout << "Disconnected. Exiting...\n" << std::endl;
+        return;
+    }
+    short messageOpcode = bytesToShort(msgOp);
+    std::cout << "ERROR " << messageOpcode << std::endl;
+    }
 
 
 void Server2Client::run() {
