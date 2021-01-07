@@ -13,7 +13,9 @@ class Server2Client{
 private:
     ConnectionHandler &_handler;
     std::mutex & _mutex;
-    int _id;
+    std::thread *myThread;
+    bool shouldTerminate;
+
 public:
     Server2Client(int id, ConnectionHandler& handler, std::mutex& mutex);
 
@@ -25,6 +27,9 @@ public:
 
     void processErrMsg();
 
+    void start();
+
+    void stop();
 
 
 };
