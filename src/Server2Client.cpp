@@ -31,38 +31,18 @@ void Server2Client::kdamCheck() { //print the list of the KDAM courses
     std::cout << kdamCourses << std::endl;
 }
 
-void Server2Client::courseStat() { //print the list of the KDAM courses
-    std::string course;
-    if (!_handler.getLine(course)){
+void Server2Client::c() { //print the list of the KDAM courses
+    std::string kdamCourses;
+    if (!_handler.getLine(kdamCourses)){
         std::cout << "Disconnected. Exiting...\n" << std::endl;
         return;
     }
-    std::cout << course << std::endl;
-}
-
-void Server2Client::studentStat() { //print the list of the KDAM courses
-    std::string studentStat;
-    if (!_handler.getLine(studentStat)){
-        std::cout << "Disconnected. Exiting...\n" << std::endl;
-        return;
-    }
-    std::cout << studentStat << std::endl;
-}
-
-void Server2Client::myCourses() { //print the list of the KDAM courses
-    std::string myCourses;
-    if (!_handler.getLine(myCourses)){
-        std::cout << "Disconnected. Exiting...\n" << std::endl;
-        return;
-    }
-    std::cout << myCourses << std::endl;
+    std::cout << kdamCourses << std::endl;
 }
 
 void Server2Client::optional(short messageOp) {
     if(messageOp == 4){ // message opcode was - "LOGOUT"
         // SHOULD TERMINATE !!!!!!
-        this->shouldTerminate = true;
-        this->stop();
     }
     if(messageOp == 6){ // message opcode was - "KDAMCHECK"
         kdamCheck(); //print the KDAM courses
