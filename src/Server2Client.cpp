@@ -4,7 +4,7 @@
 
 #include "Server2Client.h"
 //ConnectionHandler handler = new ConnectionHandler("127.0.0.1", 7777);
-Server2Client::Server2Client(int id, ConnectionHandler &handler, std::mutex &mutex) : _handler(handler) ,
+Server2Client::Server2Client(ConnectionHandler &handler, std::mutex &mutex) : _handler(handler) ,
                         _mutex(mutex), shouldTerminate(false) {
 
 }
@@ -19,7 +19,7 @@ void Server2Client::stop() {
 
 void Server2Client::start(){
     myThread = new std::thread(&Server2Client::run, this);
-    myThread->join();
+//    myThread->join();
 }
 
 void Server2Client::kdamCheck() { //print the list of the KDAM courses
@@ -31,36 +31,33 @@ void Server2Client::kdamCheck() { //print the list of the KDAM courses
     std::cout << kdamCourses << std::endl;
 }
 
-void Server2Client::optional(short messageOp) {
-    if(messageOp == 4){ // message opcode was - "LOGOUT"
-        // SHOULD TERMINATE !!!!!!
-    }
-    if(messageOp == 6){ // message opcode was - "KDAMCHECK"
-        kdamCheck(); //print the KDAM courses
-    }
-    if(messageOp == 7){ // message opcode was - "COURSESTAT"
-        courseStat(); // prints the state of the course
-    }
-    if(messageOp == 9){ // message opcode was - "STUDENTSTAT"
-        studentStat(); // prints the state of the student
-    }
-    if(messageOp == 11){ // message opcode was - "MYCOURSES"
-        myCourses(); // prints the list of the courses numbers that the student has registered to
-    }
-    else{ //messageOp that doesn't have 'optional'
-        char emptyOptional[1];
-        if (!_handler.getBytes(emptyOptional, sizeof(emptyOptional))){
-            std::cout << "Disconnected. Exiting...\n" << std::endl;
-            return;
-        }
-        return;
-    }
-
-
-
-
-
-}
+//void Server2Client::optional(short messageOp) {
+//    if(messageOp == 4){ // message opcode was - "LOGOUT"
+//        // SHOULD TERMINATE !!!!!!
+//    }
+//    if(messageOp == 6){ // message opcode was - "KDAMCHECK"
+//        kdamCheck(); //print the KDAM courses
+//    }
+//    if(messageOp == 7){ // message opcode was - "COURSESTAT"
+//        courseStat(); // prints the state of the course
+//    }
+//    if(messageOp == 9){ // message opcode was - "STUDENTSTAT"
+//        studentStat(); // prints the state of the student
+//    }
+//    if(messageOp == 11){ // message opcode was - "MYCOURSES"
+//        myCourses(); // prints the list of the courses numbers that the student has registered to
+//    }
+//    else{ //messageOp that doesn't have 'optional'
+//        char emptyOptional[1];
+//        if (!_handler.getBytes(emptyOptional, sizeof(emptyOptional))){
+//            std::cout << "Disconnected. Exiting...\n" << std::endl;
+//            return;
+//        }
+//        return;
+//    }
+//
+//
+//}
 
 void Server2Client::processAckMsg() {
     char msgOp[2];
@@ -70,7 +67,7 @@ void Server2Client::processAckMsg() {
     }
     short messageOpcode = bytesToShort(msgOp); //opcode to know if its ack(12) ore error(13)
     std::cout << "ACK " << messageOpcode << std::endl;
-    optional(messageOpcode);
+//    optional(messageOpcode);
 }
 
 void Server2Client::processErrMsg() {
@@ -98,7 +95,7 @@ void Server2Client::run() {
             std:: cout << "13" << std::endl;
             processErrMsg();
         }
-        memset(byteOpcode, 0, sizeof(byteOpcode)
+        memset(byteOpcode, 0, sizeof(byteOpcode));
 
 
 

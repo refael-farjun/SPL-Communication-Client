@@ -3,6 +3,7 @@
 //
 #include "BGRSClient.h"
 #include "User2Client.h"
+#include "Server2Client.h"
 
 int main (int argc, char *argv[]) {
     if (argc < 3) {
@@ -21,7 +22,12 @@ int main (int argc, char *argv[]) {
     std::thread t;
     std::mutex mutex;
     User2client user2client(connectionHandler, mutex);
+    Server2Client server2Client(connectionHandler, mutex);
+
     user2client.start();
+    server2Client.start();
+//    Server2Client server2Client(_handler, _mutex);
+//    server2Client.start();
 
 
 

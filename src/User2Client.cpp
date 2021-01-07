@@ -1,6 +1,7 @@
 //
 // Created by spl211 on 06/01/2021.
 // decode
+//#include <Server2Client.h>
 #include "User2Client.h"
 
 
@@ -17,8 +18,11 @@ void User2client::stop() {
 
 
 void User2client::start(){
+//    Server2Client server2Client(_handler, _mutex);
+//    server2Client.start();
+
     myThread = new std::thread(&User2client::run, this);
-    myThread->join();
+//    myThread->join();
 }
 
 void shortToBytes(short num, char* bytesArr)
@@ -104,27 +108,94 @@ void User2client::encode(std::vector<std::string> strVec) {
     }
     else if (strVec[0] == "LOGOUT"){
         // encode by op
+        bufferSize += 2;
+        char *toSend = new char[bufferSize];
+        shortToBytes(4, toSend);
+
+        _handler.sendBytes(toSend, bufferSize);
+
+        delete[] toSend;
+
+
     }
     else if (strVec[0] == "COURSEREG"){
         // encode by op
+        bufferSize += 2;
+        char *toSend = new char[bufferSize];
+        shortToBytes(5, toSend);
+        shortToBytes(std::stoi(strVec[1]), toSend + 2);
+
+        _handler.sendBytes(toSend, bufferSize);
+
+        delete[] toSend;
     }
     else if (strVec[0] == "KDAMCHECK"){
         // encode by op
+        bufferSize += 2;
+        char *toSend = new char[bufferSize];
+        shortToBytes(6, toSend);
+        shortToBytes(std::stoi(strVec[1]), toSend + 2);
+
+        _handler.sendBytes(toSend, bufferSize);
+
+        delete[] toSend;
+
     }
     else if (strVec[0] == "COURSESTAT"){
         // encode by op
+        bufferSize += 2;
+        char *toSend = new char[bufferSize];
+        shortToBytes(7, toSend);
+        shortToBytes(std::stoi(strVec[1]), toSend + 2);
+
+        _handler.sendBytes(toSend, bufferSize);
+
+        delete[] toSend;
     }
     else if (strVec[0] == "STUDENTSTAT"){
         // encode by op
+        bufferSize += 2;
+        char *toSend = new char[bufferSize];
+        shortToBytes(8, toSend);
+        strcpy(toSend + 2   , strVec[1].c_str());
+        strcpy(toSend + 2   + strVec[1].size(), "\0");
+//        strcpy(toSend + 2  + 2, "\0");
+
+        _handler.sendBytes(toSend, bufferSize);
+
+        delete[] toSend;
     }
     else if (strVec[0] == "ISREGISTERED"){
         // encode by op
+        bufferSize += 2;
+        char *toSend = new char[bufferSize];
+        shortToBytes(9, toSend);
+        shortToBytes(std::stoi(strVec[1]), toSend + 2);
+
+        _handler.sendBytes(toSend, bufferSize);
+
+        delete[] toSend;
     }
     else if (strVec[0] == "UNREGISTER"){
         // encode by op
+        bufferSize += 2;
+        char *toSend = new char[bufferSize];
+        shortToBytes(10, toSend);
+        shortToBytes(std::stoi(strVec[1]), toSend + 2);
+
+        _handler.sendBytes(toSend, bufferSize);
+
+        delete[] toSend;
     }
     else if (strVec[0] == "MYCOURSES"){
         // encode by op
+        bufferSize += 2;
+        char *toSend = new char[bufferSize];
+        shortToBytes(11, toSend);
+
+        _handler.sendBytes(toSend, bufferSize);
+
+        delete[] toSend;
     }
 
 

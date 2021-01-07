@@ -17,7 +17,7 @@ private:
     bool shouldTerminate;
 
 public:
-    Server2Client(int id, ConnectionHandler& handler, std::mutex& mutex);
+    Server2Client(ConnectionHandler& handler, std::mutex& mutex);
 
     void run();
 
