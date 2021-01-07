@@ -32,12 +32,12 @@ void Server2Client::kdamCheck() { //print the list of the KDAM courses
 }
 
 void Server2Client::courseStat() { //print the list of the KDAM courses
-    std::string courseStat;
-    if (!_handler.getLine(courseStat)){
+    std::string course;
+    if (!_handler.getLine(course)){
         std::cout << "Disconnected. Exiting...\n" << std::endl;
         return;
     }
-    std::cout << courseStat << std::endl;
+    std::cout << course << std::endl;
 }
 
 void Server2Client::studentStat() { //print the list of the KDAM courses
