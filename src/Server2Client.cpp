@@ -18,8 +18,12 @@ void Server2Client::stop() {
 
 
 void Server2Client::start(){
+    for (size_t i = 0; i < 20; i++)
+    {
+        std::cout << "server !"  << std::endl;
+    }
     myThread = new std::thread(&Server2Client::run, this);
-//    myThread->join();
+    myThread->join();
 }
 
 void Server2Client::kdamCheck() { //print the list of the KDAM courses

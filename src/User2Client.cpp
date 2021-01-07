@@ -20,9 +20,12 @@ void User2client::stop() {
 void User2client::start(){
 //    Server2Client server2Client(_handler, _mutex);
 //    server2Client.start();
-
+    for (size_t i = 0; i < 20; i++)
+    {
+        std::cout << "USER !"  << std::endl;
+    }
     myThread = new std::thread(&User2client::run, this);
-//    myThread->join();
+    myThread->join();
 }
 
 void shortToBytes(short num, char* bytesArr)
