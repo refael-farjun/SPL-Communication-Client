@@ -95,12 +95,23 @@ void User2client::encode(std::vector<std::string> strVec) {
 
         shortToBytes(2, toSend);
         int counter = 2;
-        for (size_t i = 1; i < strVec.size(); i++){
-            strcpy(toSend + counter   + (i - 1) * strVec[i].size(), strVec[i].c_str());
-            counter++;
-            strcpy(toSend + counter   + (i) * strVec[i].size(), "\0");
+//        for (size_t i = 1; i < strVec.size(); i++){
+//            strcpy(toSend + counter   + (i - 1) * strVec[i].size(), strVec[i].c_str());
+//            counter++;
+//            strcpy(toSend + counter   + (i) * strVec[i].size(), "\0");
+//
+//        }
+        strcpy(toSend + 2  , strVec[1].c_str());
+        strcpy(toSend + 2 + strVec[1].size(), "\0");
+        strcpy(toSend + 3 + strVec[1].size() , strVec[2].c_str());
+        strcpy(toSend + 3 + strVec[1].size() + strVec[2].size(), "\0");
 
+        for (size_t i = 0; i < bufferSize; i++){
+            std::cout << toSend[i] << std::endl;
         }
+
+
+
 
         _handler.sendBytes(toSend, bufferSize);
 
