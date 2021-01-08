@@ -52,7 +52,6 @@ void User2client::run() {
         std::vector<std::string> strVec = split(line, " ");
         encode(strVec);
         std::cout << "Sent " << len + 1 << " bytes to server" << std::endl;
-
     }
 }
 
@@ -85,6 +84,19 @@ void User2client::encode(std::vector<std::string> strVec) {
 
     if (strVec[0] == "ADMINREG"){
         // encode by op
+        bufferSize += 2;
+        char *toSend = new char[bufferSize];
+
+        shortToBytes(1, toSend);
+
+        strcpy(toSend + 2  , strVec[1].c_str());
+        strcpy(toSend + 2 + strVec[1].size(), "\0");
+        strcpy(toSend + 3 + strVec[1].size() , strVec[2].c_str());
+        strcpy(toSend + 3 + strVec[1].size() + strVec[2].size(), "\0");
+
+        _handler.sendBytes(toSend, bufferSize);
+
+        delete[] toSend;
 
 
     }
@@ -106,19 +118,33 @@ void User2client::encode(std::vector<std::string> strVec) {
         strcpy(toSend + 3 + strVec[1].size() , strVec[2].c_str());
         strcpy(toSend + 3 + strVec[1].size() + strVec[2].size(), "\0");
 
-        for (size_t i = 0; i < bufferSize; i++){
-            std::cout << toSend[i] << std::endl;
-        }
-
-
-
-
         _handler.sendBytes(toSend, bufferSize);
 
         delete[] toSend;
     }
     else if (strVec[0] == "LOGIN"){
         // encode by op
+        bufferSize += 2;
+        char *toSend = new char[bufferSize];
+
+        shortToBytes(3, toSend);
+
+        strcpy(toSend + 2  , strVec[1].c_str());
+        strcpy(toSend + 2 + strVec[1].size(), "\0");
+        strcpy(toSend + 3 + strVec[1].size() , strVec[2].c_str());
+        strcpy(toSend + 3 + strVec[1].size() + strVec[2].size(), "\0");
+
+//        for (size_t i = 0; i < bufferSize; i++){
+//            std::cout << toSend[i] << std::endl;
+//
+//        }
+
+        _handler.sendBytes(toSend, bufferSize);
+
+        delete[] toSend;
+
+
+
     }
     else if (strVec[0] == "LOGOUT"){
         // encode by op

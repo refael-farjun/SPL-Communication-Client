@@ -99,10 +99,6 @@ void Server2Client::processAckMsg() {
     short messageOpcode = bytesToShort(msgOp); //opcode to know if its ack(12) or error(13)
     std::cout << "ACK " << messageOpcode << std::endl;
     optional(messageOpcode);
-    for (size_t i = 0; i < 2; i++)
-    {
-        std::cout <<  msgOp[i]  << std::endl;
-    }
 
 }
 
@@ -124,7 +120,7 @@ void Server2Client::run() {
             std::cout << "Disconnected. Exiting...\n" << std::endl;
             break;
         }
-        short opcode = bytesToShort(byteOpcode);
+        short opcode = bytesToShort(byteOpcode); // WHY ?? return here after kdamcheck 101 (empty string) ??
         std::cout << opcode << std::endl;
         if (opcode == 12){ //ack message received
             processAckMsg();
