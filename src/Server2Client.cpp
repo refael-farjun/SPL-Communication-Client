@@ -66,16 +66,20 @@ void Server2Client::optional(short messageOp) {
         this->shouldTerminate = true;
         this->stop();
     }
-    if(messageOp == 6){ // message opcode was - "KDAMCHECK"
+    else if(messageOp == 6){ // message opcode was - "KDAMCHECK"
         kdamCheck(); //print the KDAM courses
     }
-    if(messageOp == 7){ // message opcode was - "COURSESTAT"
+    else if(messageOp == 7){ // message opcode was - "COURSESTAT"
         courseStat(); // prints the state of the course
     }
-    if(messageOp == 9){ // message opcode was - "STUDENTSTAT"
+    else if(messageOp == 8){ // message opcode was - "STUDENTSTAT"
         studentStat(); // prints the state of the student
     }
-    if(messageOp == 11){ // message opcode was - "MYCOURSES"
+//    if(messageOp == 9){ // message opcode was - "Isregistered"
+//        isRegistered(); // print if the student is registered or not
+//    }
+
+    else if(messageOp == 11){ // message opcode was - "MYCOURSES"
         myCourses(); // prints the list of the courses numbers that the student has registered to
     }
     else{ //messageOp that doesn't have 'optional'
@@ -120,7 +124,7 @@ void Server2Client::run() {
             std::cout << "Disconnected. Exiting...\n" << std::endl;
             break;
         }
-        short opcode = bytesToShort(byteOpcode); // WHY ?? return here after kdamcheck 101 (empty string) ??
+        short opcode = bytesToShort(byteOpcode);
         std::cout << opcode << std::endl;
         if (opcode == 12){ //ack message received
             processAckMsg();
