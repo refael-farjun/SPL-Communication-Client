@@ -75,9 +75,9 @@ void Server2Client::optional(short messageOp) {
     else if(messageOp == 8){ // message opcode was - "STUDENTSTAT"
         studentStat(); // prints the state of the student
     }
-//    if(messageOp == 9){ // message opcode was - "Isregistered"
-//        isRegistered(); // print if the student is registered or not
-//    }
+    else if(messageOp == 9){ // message opcode was - "Isregistered"
+        isRegistered(); // print if the student is registered or not
+    }
 
     else if(messageOp == 11){ // message opcode was - "MYCOURSES"
         myCourses(); // prints the list of the courses numbers that the student has registered to
@@ -90,9 +90,17 @@ void Server2Client::optional(short messageOp) {
         }
         return;
     }
-
-
 }
+
+void Server2Client::isRegistered(){
+    std::string isRegisterd;
+    if (!_handler.getLine(isRegisterd)){
+        std::cout << "Disconnected. Exiting...\n" << std::endl;
+        return;
+    }
+    std::cout << isRegisterd << std::endl;
+}
+
 
 void Server2Client::processAckMsg() {
     char msgOp[2];

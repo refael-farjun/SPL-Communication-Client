@@ -33,6 +33,8 @@ public:
 
     void myCourses();
 
+    void isRegistered();
+
     void processAckMsg();
 
     void processErrMsg();
