@@ -31,7 +31,7 @@ void User2client::run() {
 
         std::string line(buf);
         int len = line.length();
-        std::cout << "line: " << line << std::endl;
+//        std::cout << "line: " << line << std::endl;
 //        if (!_handler.sendLine(line)) {
 //            std::cout << "Disconnected. Exiting...\n" << std::endl;
 //            break;
@@ -40,7 +40,7 @@ void User2client::run() {
 
         std::vector<std::string> strVec = split(line, " ");
         encode(strVec);
-        std::cout << "Sent " << len + 1 << " bytes to server" << std::endl;
+//        std::cout << "Sent " << len + 1 << " bytes to server" << std::endl;
 
     }
 }

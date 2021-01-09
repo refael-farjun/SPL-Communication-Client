@@ -121,12 +121,11 @@ void Server2Client::run() {
             break;
         }
         short opcode = bytesToShort(byteOpcode);
-        std::cout << opcode << std::endl;
+//        std::cout << opcode << std::endl;
         if (opcode == 12){ //ack message received
             processAckMsg();
         }
         if (opcode == 13){ //error message received
-            std:: cout << "13" << std::endl;
             processErrMsg();
         }
         memset(byteOpcode, 0, sizeof(byteOpcode));
