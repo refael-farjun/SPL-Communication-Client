@@ -10,24 +10,6 @@ User2client::User2client(ConnectionHandler &handler, std::mutex &mutex) : _handl
                         shouldTerminate(handler.getTerminate()) {
 }
 
-void User2client::stop() {
-    shouldTerminate = true;
-    myThread->join();
-    delete myThread;
-    myThread = nullptr;
-}
-
-
-void User2client::start(){
-//    Server2Client server2Client(_handler, _mutex);
-//    server2Client.start();
-    for (size_t i = 0; i < 20; i++)
-    {
-        std::cout << "USER !"  << std::endl;
-    }
-    myThread = new std::thread(&User2client::run, this);
-    myThread->join();
-}
 
 void shortToBytes(short num, char* bytesArr)
 {
@@ -114,7 +96,6 @@ void User2client::encode(std::vector<std::string> strVec) {
         char *toSend = new char[bufferSize];
 
         shortToBytes(2, toSend);
-        int counter = 2;
 //        for (size_t i = 1; i < strVec.size(); i++){
 //            strcpy(toSend + counter   + (i - 1) * strVec[i].size(), strVec[i].c_str());
 //            counter++;

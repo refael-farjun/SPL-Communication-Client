@@ -13,7 +13,6 @@ class Server2Client{
 private:
     ConnectionHandler &_handler;
     std::mutex & _mutex;
-    std::thread *myThread;
     bool shouldTerminate;
 
 public:
@@ -38,11 +37,6 @@ public:
     void processAckMsg();
 
     void processErrMsg();
-
-    void start();
-
-    void stop();
-
 
 };
 #endif //BOOST_ECHO_CLIENT_SERVER2CLIENT_H

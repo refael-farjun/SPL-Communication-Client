@@ -14,7 +14,6 @@ class User2client{
 private:
     ConnectionHandler & _handler;
     std::mutex & _mutex;
-    std::thread *myThread;
     bool shouldTerminate;
 
 public:
@@ -25,12 +24,6 @@ public:
 
     void encode(std::vector<std::string>);
 
-
-    void start();
-
-
-
-    void stop();
 
 
 };

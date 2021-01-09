@@ -9,18 +9,6 @@ Server2Client::Server2Client(ConnectionHandler &handler, std::mutex &mutex) : _h
 
 }
 
-void Server2Client::stop() {
-    shouldTerminate = true;
-//    myThread->join();
-    delete myThread;
-    myThread = nullptr;
-}
-
-
-void Server2Client::start(){
-    myThread = new std::thread(&Server2Client::run, this);
-//    myThread->join();
-}
 
 void Server2Client::kdamCheck() { //print the list of the KDAM courses
     std::string kdamCourses;
