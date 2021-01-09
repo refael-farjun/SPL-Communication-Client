@@ -63,9 +63,8 @@ void Server2Client::myCourses() { //print the list of the KDAM courses
 void Server2Client::optional(short messageOp) {
     if(messageOp == 4){ // message opcode was - "LOGOUT"
         // SHOULD TERMINATE !!!!!!
+        std::lock_guard<std::mutex> lock(_mutex);
         _handler.setTerminate(true);
-
-
 
     }
     else if(messageOp == 6){ // message opcode was - "KDAMCHECK"
