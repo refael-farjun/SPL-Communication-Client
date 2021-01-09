@@ -3,10 +3,11 @@
 // decode
 //#include <Server2Client.h>
 #include "User2Client.h"
-
+#include <future>
+#include <signal.h>
 
 User2client::User2client(ConnectionHandler &handler, std::mutex &mutex) : _handler(handler), _mutex(mutex),
-                        shouldTerminate(false) {
+                        shouldTerminate(handler.getTerminate()) {
 }
 
 void User2client::stop() {
@@ -34,12 +35,18 @@ void shortToBytes(short num, char* bytesArr)
     bytesArr[1] = (num & 0xFF);
 }
 
+void sigAbort(int sig)
+{
+    exit(0);
+}
+
 void User2client::run() {
-    while (!shouldTerminate) {
+    while (!_handler.getTerminate()) {
 
         const short bufsize = 1024;
         char buf[bufsize];
         std::cin.getline(buf, bufsize);
+
         std::string line(buf);
         int len = line.length();
         std::cout << "line: " << line << std::endl;
@@ -52,6 +59,7 @@ void User2client::run() {
         std::vector<std::string> strVec = split(line, " ");
         encode(strVec);
         std::cout << "Sent " << len + 1 << " bytes to server" << std::endl;
+
     }
 }
 

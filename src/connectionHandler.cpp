@@ -8,7 +8,7 @@ using std::cerr;
 using std::endl;
 using std::string;
  
-ConnectionHandler::ConnectionHandler(string host, short port): host_(host), port_(port), io_service_(), socket_(io_service_){}
+ConnectionHandler::ConnectionHandler(string host, short port): host_(host), port_(port), io_service_(), socket_(io_service_), shouldTerminate(false) {}
     
 ConnectionHandler::~ConnectionHandler() {
     close();
@@ -107,6 +107,16 @@ void ConnectionHandler::close() {
         std::cout << "closing failed: connection already closed" << std::endl;
     }
 }
+
+void ConnectionHandler::setTerminate(bool terminateVal){
+    shouldTerminate = terminateVal;
+}
+
+bool ConnectionHandler::getTerminate() const {
+    return shouldTerminate;
+}
+
+
 //    short bytesToShort(char* bytesArr)
 //    {
 //        short result = (short)((bytesArr[0] & 0xff) << 8);

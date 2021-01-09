@@ -26,8 +26,11 @@ int main (int argc, char *argv[]) {
 //    t = new std::thread(&User2client::start, &user2client);
     std::thread t1(&User2client::run, &user2client);
     std::thread t2(&Server2Client::run, &server2Client);
-    t1.join();
     t2.join();
+    exit(0);
+    t1.join();
+
+
 //    user2client.start();
 //    server2Client.start();
 //    Server2Client server2Client(_handler, _mutex);

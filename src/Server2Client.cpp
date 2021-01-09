@@ -63,8 +63,9 @@ void Server2Client::myCourses() { //print the list of the KDAM courses
 void Server2Client::optional(short messageOp) {
     if(messageOp == 4){ // message opcode was - "LOGOUT"
         // SHOULD TERMINATE !!!!!!
-        this->shouldTerminate = true;
-        this->stop();
+        _handler.setTerminate(true);
+
+
 
     }
     else if(messageOp == 6){ // message opcode was - "KDAMCHECK"
@@ -127,7 +128,7 @@ void Server2Client::processErrMsg() {
 
 
 void Server2Client::run() {
-    while (!shouldTerminate){
+    while (!_handler.getTerminate()){
         char byteOpcode[2];
         if (!_handler.getBytes(byteOpcode, sizeof(byteOpcode))) {
             std::cout << "Disconnected. Exiting...\n" << std::endl;

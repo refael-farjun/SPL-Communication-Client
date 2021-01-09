@@ -12,7 +12,8 @@ private:
 	const std::string host_;
 	const short port_;
 	boost::asio::io_service io_service_;   // Provides core I/O functionality
-	tcp::socket socket_; 
+	tcp::socket socket_;
+	bool shouldTerminate;
  
 public:
     ConnectionHandler(std::string host, short port);
@@ -48,6 +49,10 @@ public:
     // Close down the connection properly.
     void close();
 
+    // yanay add for terminate Threads
+    void setTerminate(bool terminateVal);
+
+    bool getTerminate() const;
 //    void shortToBytes(short num, char* bytesArr);
  
 }; //class ConnectionHandler
