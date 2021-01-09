@@ -33,18 +33,17 @@ int main (int argc, char *argv[]) {
 //    std::thread *myThread2;
 //    myThread2 = new std::thread(&Server2Client::run, &server2Client);
 //
+//    myThread1->join();
 //    myThread2->join();
-//    myThread1->detach();
-//
-//    delete myThread2;
+
 //    delete myThread1;
+//    delete myThread2;
 
     t2.join();
-//    t1.detach();
-    exit(0);
+
+//    exit(0);
 
     t1.join();
-
 
 
 

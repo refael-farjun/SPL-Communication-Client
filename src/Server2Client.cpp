@@ -126,6 +126,7 @@ void Server2Client::run() {
             processAckMsg();
         }
         if (opcode == 13){ //error message received
+//            std:: cout << "13" << std::endl;
             processErrMsg();
         }
         memset(byteOpcode, 0, sizeof(byteOpcode));
