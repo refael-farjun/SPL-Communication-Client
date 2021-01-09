@@ -9,7 +9,6 @@ Server2Client::Server2Client(ConnectionHandler &handler, std::mutex &mutex) : _h
 
 }
 
-
 void Server2Client::kdamCheck() { //print the list of the KDAM courses
     std::string kdamCourses;
     if (!_handler.getLine(kdamCourses)){
