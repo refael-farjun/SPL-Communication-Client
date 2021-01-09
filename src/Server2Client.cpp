@@ -65,6 +65,7 @@ void Server2Client::optional(short messageOp) {
         // SHOULD TERMINATE !!!!!!
         this->shouldTerminate = true;
         this->stop();
+
     }
     else if(messageOp == 6){ // message opcode was - "KDAMCHECK"
         kdamCheck(); //print the KDAM courses
