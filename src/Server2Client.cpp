@@ -11,7 +11,7 @@ Server2Client::Server2Client(ConnectionHandler &handler, std::mutex &mutex) : _h
 
 void Server2Client::stop() {
     shouldTerminate = true;
-    myThread->join();
+//    myThread->join();
     delete myThread;
     myThread = nullptr;
 }
