@@ -196,14 +196,23 @@ void User2client::encode(std::vector<std::string> strVec) {
         // encode by op
         bufferSize += 2;
         char *toSend = new char[bufferSize];
+
         shortToBytes(8, toSend);
-        strcpy(toSend + 2   , strVec[1].c_str());
-        strcpy(toSend + 2   + strVec[1].size(), "\0");
-//        strcpy(toSend + 2  + 2, "\0");
+
+        strcpy(toSend + 2  , strVec[1].c_str());
+        strcpy(toSend + 2 + strVec[1].size(), "\0");
+        strcpy(toSend + 3 + strVec[1].size() , strVec[2].c_str());
+        strcpy(toSend + 3 + strVec[1].size() + strVec[2].size(), "\0");
+
+        for (size_t i = 0; i < bufferSize; i++){
+            std::cout << toSend[i] << std::endl;
+
+        }
 
         _handler.sendBytes(toSend, bufferSize);
 
         delete[] toSend;
+
     }
     else if (strVec[0] == "ISREGISTERED"){
         // encode by op
@@ -229,7 +238,7 @@ void User2client::encode(std::vector<std::string> strVec) {
     }
     else if (strVec[0] == "MYCOURSES"){
         // encode by op
-        bufferSize += 2;
+        bufferSize += 1;
         char *toSend = new char[bufferSize];
         shortToBytes(11, toSend);
 
@@ -238,7 +247,7 @@ void User2client::encode(std::vector<std::string> strVec) {
         delete[] toSend;
     }
 
-
+//
 
 
 }
