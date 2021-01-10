@@ -30,7 +30,8 @@ void User2client::run() {
         std::cin.getline(buf, bufsize);
 
         std::string line(buf);
-        int len = line.length();
+//        int len = line.length();
+
 //        std::cout << "line: " << line << std::endl;
 
 //        if (!_handler.sendLine(line)) {
@@ -69,13 +70,14 @@ std::vector<std::string> User2client::split(std::string line, std::string delimi
 void User2client::encode(std::vector<std::string> strVec) {
 
     int bufferSize = 2;
-    for (size_t i = 1; i < strVec.size(); i++)
-    {
-        bufferSize += strVec[i].size();
-    }
 
     if (strVec[0] == "ADMINREG"){
         // encode by op
+        for (size_t i = 1; i < strVec.size(); i++)
+        {
+            bufferSize += strVec[i].size();
+        }
+
         bufferSize += 2;
         char *toSend = new char[bufferSize];
 
@@ -94,6 +96,11 @@ void User2client::encode(std::vector<std::string> strVec) {
     }
     else if (strVec[0] == "STUDENTREG"){
         // encode by op
+        for (size_t i = 1; i < strVec.size(); i++)
+        {
+            bufferSize += strVec[i].size();
+        }
+
         bufferSize += 2;
         char *toSend = new char[bufferSize];
 
@@ -115,6 +122,11 @@ void User2client::encode(std::vector<std::string> strVec) {
     }
     else if (strVec[0] == "LOGIN"){
         // encode by op
+        for (size_t i = 1; i < strVec.size(); i++)
+        {
+            bufferSize += strVec[i].size();
+        }
+
         bufferSize += 2;
         char *toSend = new char[bufferSize];
 
@@ -184,6 +196,8 @@ void User2client::encode(std::vector<std::string> strVec) {
     }
     else if (strVec[0] == "STUDENTSTAT"){
         // encode by op
+        bufferSize += strVec[1].size();
+
         bufferSize += 1;
         char *toSend = new char[bufferSize];
 
@@ -209,7 +223,13 @@ void User2client::encode(std::vector<std::string> strVec) {
         bufferSize += 2;
         char *toSend = new char[bufferSize];
         shortToBytes(9, toSend);
-        shortToBytes(std::stoi(strVec[1]), toSend + 2);
+//        strcpy(toSend + 2  , strVec[1].c_str());
+        shortToBytes((short)std::stoi(strVec[1]), toSend + 2);
+
+//        for (size_t i = 0; i < bufferSize; i++){
+//            std::cout << toSend[i] << std::endl;
+//
+//        }
 
         _handler.sendBytes(toSend, bufferSize);
 
